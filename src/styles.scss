@@ -1,0 +1,209 @@
+/* You can add global styles to this file, and also import other style files */
+a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    margin-top: -10px;
+}
+
+
+.img_box {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Anime-themed background + animation overlay */
+:root {
+  --anime-bg: url("https://qualitytourpremium.com/public/images/articles/profile/7-98.png"); /* anime city night */
+  --primary-neon: #8a2be2; /* blue violet */
+  --secondary-neon: #00eaff; /* cyan */
+}
+
+body {
+  background: #0b1020; /* fallback */
+  background-image: 
+    linear-gradient(135deg, rgba(138,43,226,0.3) 0%, rgba(0,234,255,0.2) 50%, rgba(255,105,180,0.15) 100%),
+    var(--anime-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-blend-mode: overlay;
+  color: #f5f7ff;
+}
+
+/* Aurora/Glow animated overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.35;
+  background:
+    radial-gradient(60vmax 60vmax at 10% 20%, rgba(138,43,226,0.25), transparent 60%),
+    radial-gradient(40vmax 40vmax at 80% 10%, rgba(0,234,255,0.18), transparent 60%),
+    radial-gradient(50vmax 50vmax at 20% 90%, rgba(255,105,180,0.18), transparent 60%),
+    radial-gradient(35vmax 35vmax at 90% 85%, rgba(255,255,255,0.12), transparent 60%);
+  animation: aurora-shift 18s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-shift {
+  0%   { filter: hue-rotate(0deg);   transform: translate3d(0,0,0); }
+  50%  { filter: hue-rotate(25deg);  transform: translate3d(0,-1%,0); }
+  100% { filter: hue-rotate(55deg);  transform: translate3d(0,1%,0); }
+}
+
+/* Starfield (for containers using #container-stars/#stars) */
+#container-stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+#stars {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8) 50%, transparent 51%),
+    radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 90px 150px, rgba(255,255,255,0.6) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 200px 40px, rgba(255,255,255,0.6) 50%, transparent 51%),
+    radial-gradient(2px 2px at 300px 120px, rgba(255,255,255,0.75) 50%, transparent 51%);
+  background-repeat: repeat;
+  background-size: 350px 350px;
+  opacity: 0.35;
+  animation: star-scroll 60s linear infinite;
+}
+
+@keyframes star-scroll {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-350px,-350px,0); }
+}
+
+/* Neon glow accents for elements with #glow/.circle (already in markup) */
+#glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#glow .circle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(0,234,255,0.35), transparent 60%);
+  box-shadow:
+    0 0 30px rgba(0,234,255,0.35),
+    0 0 60px rgba(138,43,226,0.25),
+    inset 0 0 20px rgba(255,255,255,0.08);
+  animation: pulse 4s ease-in-out infinite alternate;
+}
+#glow .circle:nth-child(1) { top: 15%; left: 12%; animation-delay: 0.2s; }
+#glow .circle:nth-child(2) { bottom: 12%; right: 10%; animation-delay: 1.1s; }
+
+@keyframes pulse {
+  0%   { transform: scale(0.95); opacity: 0.45; }
+  100% { transform: scale(1.08); opacity: 0.75; }
+}
+
+/* Glassy neon button style for .btn */
+.btn {
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  background: rgba(12, 18, 40, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #eaf2ff;
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,255,255,0.06) inset;
+  transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,234,255,0.35);
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.45),
+    0 0 20px rgba(138,43,226,0.35),
+    0 0 36px rgba(0,234,255,0.25);
+}
+.btn:active { transform: translateY(0); }
+
+/* Utility: ensure containers that want stars/glow are relatively positioned */
+.has-effects { position: relative; }
+
+.nav-color {
+    background-color: #ffcd8b;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.black-snackbar {
+    background: black !important;
+    color: white !important;
+  }
+  
+.green-snackbar {
+    background: #32CD32 !important;
+    color: white !important;
+  }
+
+  .Btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background-color: rgb(255, 65, 65);
+}
+.sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sign svg {
+    width: 17px;
+}
+.sign svg path {
+    fill: white;
+}
+.text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.0em;
+    font-weight: 600;
+    transition-duration: .3s;
+}
+.Btn:hover {
+    width: 125px;
+    border-radius: 40px;
+    transition-duration: .3s;
+}
+.Btn:hover .sign {
+    width: 30%;
+    transition-duration: .3s;
+    padding-left: 20px;
+}
+.Btn:hover .text {
+    opacity: 1;
+    width: 70%;
+    transition-duration: .3s;
+    padding-right: 10px;
+}
+.Btn:active {
+    transform: translate(2px, 2px);
+}

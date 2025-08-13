@@ -1,0 +1,208 @@
+<div class="cotainer">
+    <mat-toolbar style="display: flex; justify-content: space-between; margin-top: -100px;">
+        <div style="text-align: center;">
+            <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">FACEMASH</span></a>
+        </div>
+        <div class="rigth">
+            <button routerLinkActive="active-link" routerLink="/login" class="Btn" style="background-color: rgb(71, 65, 255);">
+                <div class="sign"><svg viewBox="0 0 512 512">
+                        <path
+                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                        </path>
+                    </svg></div>
+                <div class="text">Login</div>
+            </button>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div class="container" style="margin-top: 100px;">
+    <button class="btn" type="button" style="width: 100%">
+        <strong>
+            <div style="display: flex; justify-content: space-around; font-size: 20px;">
+                <a routerLink="/" style="padding: 0 60px;"> <span style="color: brown; font-weight: bolder;">HOME</span> </a>
+                <a routerLink="/toptennull" style="padding: 0 60px;"> <span>TOP10</span> </a>
+                <a [routerLink]="['/#']" style="padding: 0 60px;"><span>STATISTICS/WEEK</span></a>
+                <a [routerLink]="['/#']" style="padding: 0 60px;"><span style="margin-top: -10px;">SETTING</span> </a>
+            </div>
+        </strong>
+        <div id="container-stars">
+            <div id="stars"></div>
+        </div>
+
+        <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </button>
+
+    <!-- Login Required Message -->
+    <div class="login-required-section" style="text-align: center; margin: 50px 0; padding: 40px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; backdrop-filter: blur(10px);">
+        <div class="login-icon" style="font-size: 4em; margin-bottom: 20px;">🔐</div>
+        <h1 style="color: #ffd700; font-size: 2.5em; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);">
+            ยินดีต้อนรับสู่ FACEMASH
+        </h1>
+        <p style="color: #fff; font-size: 1.3em; margin-bottom: 30px; line-height: 1.6;">
+            ระบบ Vote ภาพยอดนิยมแบบ Real-time<br>
+            <span style="color: #ffd700; font-weight: bold;">กรุณาเข้าสู่ระบบเพื่อเริ่มต้นการใช้งาน</span>
+        </p>
+        
+        <div class="login-button-container" style="margin: 30px 0;">
+            <button routerLink="/login" class="login-btn" style="
+                background: linear-gradient(45deg, #ffd700, #ffed4e);
+                color: #000;
+                border: none;
+                padding: 15px 40px;
+                font-size: 1.2em;
+                font-weight: bold;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255, 215, 0, 0.5)'" 
+               onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 5px 15px rgba(255, 215, 0, 0.3)'">
+                🚀 เข้าสู่ระบบ
+            </button>
+        </div>
+
+        <div class="features" style="display: flex; justify-content: space-around; margin-top: 40px; flex-wrap: wrap;">
+            <div class="feature" style="text-align: center; margin: 20px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; min-width: 200px;">
+                <div style="font-size: 2em; margin-bottom: 10px;">🏆</div>
+                <h3 style="color: #ffd700; margin-bottom: 10px;">Vote ภาพ</h3>
+                <p style="color: #ccc;">เลือกภาพที่คุณชอบที่สุด</p>
+            </div>
+            <div class="feature" style="text-align: center; margin: 20px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; min-width: 200px;">
+                <div style="font-size: 2em; margin-bottom: 10px;">📊</div>
+                <h3 style="color: #ffd700; margin-bottom: 10px;">ดูอันดับ</h3>
+                <p style="color: #ccc;">ติดตามภาพยอดนิยม</p>
+            </div>
+            <div class="feature" style="text-align: center; margin: 20px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; min-width: 200px;">
+                <div style="font-size: 2em; margin-bottom: 10px;">👤</div>
+                <h3 style="color: #ffd700; margin-bottom: 10px;">สร้างโปรไฟล์</h3>
+                <p style="color: #ccc;">อัพโหลดภาพของคุณ</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sample Images Section -->
+    <div class="sample-images-section" style="margin: 50px 0;">
+        <h2 style="text-align: center; color: #ffd700; font-size: 2em; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);">
+            📸 ตัวอย่างภาพในระบบ
+        </h2>
+        <p style="text-align: center; color: #ccc; font-size: 1.1em; margin-bottom: 40px;">
+            ดูตัวอย่างภาพที่ผู้ใช้อื่นๆ อัพโหลดมา (เข้าสู่ระบบเพื่อ Vote)
+        </p>
+        
+        <div class="row" style="display: flex; align-items: center; justify-content: center; margin: 0;">
+            <div class="col-md-5" style="
+                background: rgba(255, 255, 255, 0.1); 
+                border-radius: 20px; 
+                padding: 20px; 
+                margin: 10px;
+                backdrop-filter: blur(10px);
+                border: 2px solid rgba(255, 215, 0, 0.3);
+                position: relative;
+                overflow: hidden;
+                flex: 1;
+                max-width: 500px;
+            ">
+                <div class="login-overlay" style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.7);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10;
+                    border-radius: 18px;
+                ">
+                    <div style="text-align: center; color: #fff;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">🔒</div>
+                        <p style="font-size: 1.2em; font-weight: bold;">เข้าสู่ระบบเพื่อ Vote</p>
+                    </div>
+                </div>
+                
+                <img [src]="character1Image.image_url" style="width: 100%; height: 400px; object-fit: cover; border-radius: 15px;">
+                <div style="display: flex; align-items: center; margin-top: 15px;">
+                    <img [src]="character1Image.avatar_img" width="50px" height="45px" style="border-radius: 50%; margin-right: 10px;">
+                    <p style="margin: 0; color: #fff;">
+                        {{ character1Image.name }} || 
+                        <span style="color: #00ff88; font-weight: bold; font-size: 1.1em;">
+                            Rating: {{ formatPoints(character1Image.points) }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-2" style="
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                margin: 0 20px;
+                flex-shrink: 0;
+            ">
+                <div style="
+                    background: rgba(255, 215, 0, 0.2); 
+                    border-radius: 50%; 
+                    padding: 20px;
+                    border: 2px solid #ffd700;
+                    width: 80px;
+                    height: 80px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <span style="font-size: 1.5em; font-weight: bold; color: #fff;">VS</span>
+                </div>
+            </div>
+
+            <div class="col-md-5" style="
+                background: rgba(255, 255, 255, 0.1); 
+                border-radius: 20px; 
+                padding: 20px; 
+                margin: 10px;
+                backdrop-filter: blur(10px);
+                border: 2px solid rgba(255, 215, 0, 0.3);
+                position: relative;
+                overflow: hidden;
+                flex: 1;
+                max-width: 500px;
+            ">
+                <div class="login-overlay" style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.7);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10;
+                    border-radius: 18px;
+                ">
+                    <div style="text-align: center; color: #fff;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">🔒</div>
+                        <p style="font-size: 1.2em; font-weight: bold;">เข้าสู่ระบบเพื่อ Vote</p>
+                    </div>
+                </div>
+                
+                <img [src]="character2Image.image_url" style="width: 100%; height: 400px; object-fit: cover; border-radius: 15px;">
+                <div style="display: flex; align-items: center; margin-top: 15px;">
+                    <img [src]="character2Image.avatar_img" width="50px" height="45px" style="border-radius: 50%; margin-right: 10px;">
+                    <p style="margin: 0; color: #fff;">
+                        {{ character2Image.name }} || 
+                        <span style="color: #00ff88; font-weight: bold; font-size: 1.1em;">
+                            Rating: {{ formatPoints(character2Image.points) }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

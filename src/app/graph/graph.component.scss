@@ -1,0 +1,340 @@
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}
+
+mat-toolbar {
+  // background: #0f0d46;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  color: rgb(0, 0, 0);
+  height: 70px;
+  position: fixed;
+  z-index: 1;
+}
+
+a:hover {
+  font-weight: bolder;
+  text-shadow: 0 0 30px rgb(0, 255, 34);
+}
+
+.colorB {
+  background-color: #ffffffb8;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.hoverspan:hover {
+  color: red;
+}
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 13rem;
+  overflow: hidden;
+  height: 3rem;
+  background-size: 300% 300%;
+  backdrop-filter: blur(1rem);
+  border-radius: 5rem;
+  transition: 0.5s;
+  animation: gradient_301 5s ease infinite;
+  border: double 4px transparent;
+  background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #FE53BB 45%, #8F51EA 67%, #0044ff 87%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+#container-stars {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: 0.5s;
+  backdrop-filter: blur(1rem);
+  border-radius: 5rem;
+}
+
+strong {
+  z-index: 2;
+  font-family: 'Avalors Personal Use';
+  font-size: 12px;
+  letter-spacing: 5px;
+  color: #FFFFFF;
+  text-shadow: 0 0 4px white;
+}
+
+#glow {
+  position: absolute;
+  display: flex;
+  width: 12rem;
+}
+
+.circle {
+  width: 100%;
+  height: 30px;
+  filter: blur(2rem);
+  animation: pulse_3011 4s infinite;
+  z-index: -1;
+}
+
+.circle:nth-of-type(1) {
+  background: rgba(254, 83, 186, 0.636);
+}
+
+.circle:nth-of-type(2) {
+  background: rgba(142, 81, 234, 0.704);
+}
+
+.btn:hover #container-stars {
+  z-index: 1;
+  background-color: #212121;
+}
+
+.btn:active {
+  border: double 4px #FE53BB;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  animation: none;
+}
+
+.btn:active .circle {
+  background: #FE53BB;
+}
+
+#stars {
+  position: relative;
+  background: transparent;
+  width: 200rem;
+  height: 200rem;
+}
+
+#stars::after {
+  content: "";
+  position: absolute;
+  top: -10rem;
+  left: -100rem;
+  width: 100%;
+  height: 100%;
+  animation: animStarRotate 90s linear infinite;
+}
+
+#stars::after {
+  background-image: radial-gradient(#ffffff 1px, transparent 1%);
+  background-size: 50px 50px;
+}
+
+#stars::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 170%;
+  height: 500%;
+  animation: animStar 60s linear infinite;
+}
+
+#stars::before {
+  background-image: radial-gradient(#ffffff 1px, transparent 1%);
+  background-size: 50px 50px;
+  opacity: 0.5;
+}
+
+@keyframes animStar {
+  from {
+      transform: translateY(0);
+  }
+
+  to {
+      transform: translateY(-135rem);
+  }
+}
+
+@keyframes animStarRotate {
+  from {
+      transform: rotate(360deg);
+  }
+
+  to {
+      transform: rotate(0);
+  }
+}
+
+@keyframes gradient_301 {
+  0% {
+      background-position: 0% 50%;
+  }
+
+  50% {
+      background-position: 100% 50%;
+  }
+
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+@keyframes pulse_3011 {
+  0% {
+      transform: scale(0.75);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+      transform: scale(0.75);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.leaderboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.leaderboard-header {
+  margin-bottom: 30px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  }
+  
+  th {
+    background: rgba(255, 215, 0, 0.1);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  tr {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 215, 0, 0.1);
+      transform: scale(1.02);
+    }
+  }
+}
+
+// Top 3 positions styling
+.gold-row {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+  border-left: 4px solid #ffd700;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.2));
+  }
+}
+
+.silver-row {
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.2), rgba(192, 192, 192, 0.1));
+  border-left: 4px solid #c0c0c0;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.3), rgba(192, 192, 192, 0.2));
+  }
+}
+
+.bronze-row {
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(205, 127, 50, 0.1));
+  border-left: 4px solid #cd7f32;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.3), rgba(205, 127, 50, 0.2));
+  }
+}
+
+.normal-row {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid transparent;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #666;
+  }
+}
+
+// Medal colors
+.gold {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.silver {
+  color: #c0c0c0;
+  text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.bronze {
+  color: #cd7f32;
+  text-shadow: 0 0 10px rgba(205, 127, 50, 0.5);
+}
+
+.normal {
+  color: #fff;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .leaderboard-table {
+    font-size: 14px;
+    
+    th, td {
+      padding: 10px 8px;
+    }
+    
+    img {
+      width: 60px !important;
+      height: 60px !important;
+    }
+  }
+  
+  .leaderboard-header h1 {
+    font-size: 2em !important;
+  }
+}
+
+// Animation for new entries
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leaderboard-table tr {
+  animation: slideIn 0.5s ease-out;
+}
+
+// Glow effect for top positions
+.gold-row td {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.silver-row td {
+  box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+}
+
+.bronze-row td {
+  box-shadow: 0 0 10px rgba(205, 127, 50, 0.3);
+}
