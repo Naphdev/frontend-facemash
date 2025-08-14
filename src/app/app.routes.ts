@@ -19,7 +19,8 @@ import { ChnameComponent } from './editprofile/chname/chname.component';
 
 
 export const routes: Routes = [
-    { path: "", component: HomeComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' }, // root -> /home
+    { path: "home", component: HomeComponent },
     { path: "posts", component: PostsComponent },
     { path: "login", component: LoginComponent },
     { path: "signup", component: SignupComponent },
@@ -27,12 +28,13 @@ export const routes: Routes = [
     { path: "toptennull", component: ToptennullComponent },
     { path: "graph", component: GraphComponent },
     { path: "dashboard", component: DashboardComponent },
-    { path: "main", component: MainComponent},
-    { path: "add-img", component: AddimagesComponent},
-    { path: "editimage/:id", component: EditimagesComponent},
-    { path: "chImage/:id", component: ChImageComponent},
-    { path: "change-avatar", component: ChAvatarimgComponent},
-    { path: "change-password", component: ChangpasswordComponent},
-    { path: "change-name", component: ChnameComponent},
-    { path: "**", redirectTo: "" },
+    { path: "main", component: MainComponent },
+    { path: "add-img", component: AddimagesComponent },
+    { path: "editimage/:id", component: EditimagesComponent },
+    { path: "chImage/:id", component: ChImageComponent },
+    { path: "change-avatar", component: ChAvatarimgComponent },
+    { path: "change-password", component: ChangpasswordComponent },
+    { path: "change-name", component: ChnameComponent },
+    // { path: "**", redirectTo: "" },
+    { path: '**', redirectTo: 'home' } // path ที่ไม่ตรง -> /home
 ];
