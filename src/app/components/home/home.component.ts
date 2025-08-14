@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   character2Image: any = '';
   originalCharacter1Image: any = '';
   originalCharacter2Image: any = '';
+  isMobileMenuOpen = false;
 
   constructor(private imageService: ImageService, private eloService: EloService, private httpClient: HttpClient) { }
 
@@ -148,5 +149,9 @@ export class HomeComponent implements OnInit {
     });
 
     this.randomizeImages();
+  }
+
+  toggleMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 }
