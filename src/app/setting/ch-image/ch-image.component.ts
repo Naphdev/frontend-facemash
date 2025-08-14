@@ -11,6 +11,7 @@ import { ImageService } from '../../services/image.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImageUploadService } from '../../services/upload-service.service';
 import { RouterLink, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-ch-image',
@@ -30,7 +31,7 @@ export class ChImageComponent {
   downloadURL1: any;
   mid: any;
 
-  constructor(private imageService: ImageService, private route: ActivatedRoute,private uploadService: ImageUploadService,private router:Router,) { }
+  constructor(private imageService: ImageService, private route: ActivatedRoute,private uploadService: ImageUploadService,private router:Router,private location: Location) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -41,17 +42,34 @@ export class ChImageComponent {
 
   }
 
-  updateImage(image_url: any, image_id: any) {
-      this.imageService.updateImg(image_url, image_id).subscribe(
-        response => {
-          console.log('Image updated successfully', response);
+    goBack(): void {
+    this.location.back();
+    // หรือใช้วิธีอื่น:
+    // this.router.navigate(['/main']);
+    // window.history.back();
+  }
+
+updateImage(image_url: any, image_id: any) {
+  this.imageService.updateImg(image_url, image_id).subscribe(
+    response => {
+      console.log('Image updated successfully', response);
+      // เพิ่มการอัพเดทคะแนนเป็น 0 หลังจากเปลี่ยนรูป
+      this.imageService.updatePoints(image_id, 0).subscribe(
+        pointsResponse => {
+          console.log('Points reset to 0');
           this.router.navigate(['/main']);
         },
-        error => {
-          console.error('Error updating image', image_url, image_id);
+        pointsError => {
+          console.error('Error resetting points', pointsError);
+          this.router.navigate(['/main']); // ไปต่อแม้จะ error
         }
       );
-  }
+    },
+    error => {
+      console.error('Error updating image', image_url, image_id);
+    }
+  );
+}
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];

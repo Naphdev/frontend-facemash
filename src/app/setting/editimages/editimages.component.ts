@@ -101,21 +101,34 @@ export class EditimagesComponent {
     });
   }
   
-  deleteImage() {
+  
+deleteImage() {
+  // แสดง dialog ยืนยันการลบ
+  const confirmDelete = confirm('คุณแน่ใจหรือไม่ที่จะลบภาพนี้? การกระทำนี้ไม่สามารถยกเลิกได้');
+  
+  if (confirmDelete) {
     this.route.params.subscribe(params => {
       const id = params['id']; 
       console.log('Deleting image with ID:', id); 
+      
       this.imageService.delete(id).subscribe(
         () => {
           console.log('Image deleted successfully.');
+          // แสดงข้อความยืนยันการลบสำเร็จ (optional)
+          alert('ลบภาพเรียบร้อยแล้ว');
           this.router.navigate(['/main']);
         },
         error => {
-          console.error('Error deleting image:', error); 
+          console.error('Error deleting image:', error);
+          // แสดงข้อความ error
+          alert('เกิดข้อผิดพลาดในการลบภาพ กรุณาลองใหม่อีกครั้ง');
         }
       );
     });
+  } else {
+    console.log('Delete cancelled by user');
   }
+}
   
   changeImage(imageId: string) {
     console.log('Changing image with ID:', imageId);

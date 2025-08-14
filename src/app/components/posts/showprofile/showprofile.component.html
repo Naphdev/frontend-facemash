@@ -1,19 +1,20 @@
 <mat-toolbar>
-    <div style="text-align: center;">
-        <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">Profile</span></a>
-    </div>
+  <div class="toolbar-content">
+    <a routerLink="/"><span class="toolbar-title">Profile</span></a>
+  </div>
 </mat-toolbar>
 
-<div class="container" style="display: flex; justify-content: center; margin-top: 100px;">
-    <div class="card" style="background: #ffffff5b; width: 35%; height: auto;">
-        <h2 style="text-align: center; font-weight: bolder; margin-top: -20px;">User Profile</h2>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <img [src]="avatar_img || 'placeholder_image_url'" class="card img" alt="Avatar Image"
-                style="border-radius: 50%; width: 150px; height: 150px;">
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-            <h3>{{ name }}</h3>
-            <p>{{ email }}</p>
-        </div>
+<div class="container">
+  <div class="card">
+    <h2 class="profile-title">User Profile</h2>
+    
+    <div class="avatar-container">
+      <img [src]="avatar_img || 'placeholder_image_url'" class="avatar-image" alt="Avatar Image">
     </div>
+    
+    <div class="user-info">
+      <h3 class="user-name">{{ name }}</h3>
+      <p class="user-email">{{ email }}</p>
+    </div>
+  </div>
 </div>

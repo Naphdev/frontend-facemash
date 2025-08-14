@@ -1,0 +1,468 @@
+/* Component Host Styles */
+:host {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+    display: block;
+}
+
+/* Toolbar Styles */
+mat-toolbar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.toolbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.logo i {
+    font-size: 1.2em;
+}
+
+/* Back Button */
+.back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
+
+.back-btn i {
+    font-size: 1rem;
+}
+
+.spacer {
+    width: 80px; /* ขนาดเท่ากับปุ่ม back เพื่อให้ logo อยู่กลาง */
+}
+
+/* Container และ Layout */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+    min-height: calc(100vh - 120px);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.37);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Card Header */
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+}
+
+.card-header h2 {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.card-header i {
+    font-size: 1.2em;
+}
+
+/* Card Body */
+.card-body {
+    padding: 2rem;
+}
+
+/* Image ID */
+.image-id {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.image-id p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.mid-value {
+    color: #667eea;
+    font-weight: 600;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+/* File Input */
+.file-input-container {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    border: 2px dashed #667eea;
+    border-radius: 15px;
+    background: rgba(102, 126, 234, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.file-input-label:hover {
+    border-color: #764ba2;
+    background: rgba(118, 75, 162, 0.1);
+    transform: translateY(-2px);
+}
+
+.file-input-label i {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.file-input-label:hover i {
+    color: #764ba2;
+    transform: scale(1.1);
+}
+
+.file-input-label span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.file-input-label small {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Image Preview */
+.image-preview {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.preview-container {
+    position: relative;
+    display: inline-block;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    max-width: 100%;
+}
+
+.preview-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    display: block;
+    border-radius: 15px;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+}
+
+.preview-container:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay i {
+    font-size: 2rem;
+    color: white;
+}
+
+/* Upload Button */
+.upload-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.upload-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.upload-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.upload-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.upload-btn i {
+    font-size: 1.2em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .toolbar-content {
+        padding: 0.8rem;
+    }
+    
+    .back-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .back-btn span {
+        display: none; /* ซ่อนข้อความ แสดงแค่ไอคอน */
+    }
+    
+    .spacer {
+        width: 60px;
+    }
+    
+    .card {
+        margin: 0 0.5rem;
+        border-radius: 15px;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .file-input-label {
+        padding: 1.5rem 1rem;
+    }
+    
+    .file-input-label i {
+        font-size: 2.5rem;
+    }
+    
+    .preview-image {
+        max-width: 250px;
+    }
+    
+    .upload-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.5rem;
+    }
+    
+    .toolbar-content {
+        padding: 0.5rem;
+    }
+    
+    .back-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+        border-radius: 20px;
+    }
+    
+    .back-btn span {
+        display: none;
+    }
+    
+    .spacer {
+        width: 45px;
+    }
+    
+    .card {
+        margin: 0;
+        border-radius: 10px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        padding: 0.8rem;
+    }
+    
+    .card-header h2 {
+        font-size: 1.2rem;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .file-input-label {
+        padding: 1rem;
+    }
+    
+    .file-input-label i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .file-input-label span {
+        font-size: 1rem;
+    }
+    
+    .preview-image {
+        max-width: 200px;
+    }
+    
+    .upload-btn {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+}
+
+/* เอฟเฟกต์เพิ่มเติม */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.image-preview {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Loading effect สำหรับ button */
+.upload-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.upload-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

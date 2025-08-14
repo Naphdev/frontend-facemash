@@ -1,108 +1,341 @@
-mat-form-field {
-    width: 100%;
-}
-
-button {
-    float: right;
-    width: 200px;
-}
-
+/* Toolbar Styles */
 mat-toolbar {
-    // background: #0f0d46;
-    background: transparent;
-    backdrop-filter: blur(10px);
-    color: rgb(0, 0, 0);
-    height: 70px;
-    position: fixed;
-    z-index: 1;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  color: rgb(0, 0, 0);
+  height: 70px;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 
-.rigth {
-    margin-left: 1400px;
+.toolbar-brand {
+  text-align: center;
+  flex-grow: 1;
 }
 
-a:hover {
-    font-weight: bolder;
-    text-shadow: 0 0 30px rgb(0, 255, 34);
+.brand-text {
+  font-size: 33px;
+  font-weight: bolder;
+  text-decoration: none;
 }
 
-
-.Btn {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition-duration: .3s;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-    background-color: rgb(71, 65, 255);
+.toolbar-brand a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* plus sign */
+.toolbar-brand a:hover {
+  font-weight: bolder;
+  text-shadow: 0 0 30px rgb(0, 255, 34);
+}
+
+/* Login Button Styles */
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(71, 65, 255);
+}
+
 .sign {
-    width: 100%;
-    transition-duration: .3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sign svg {
-    width: 17px;
+  width: 17px;
 }
 
 .sign svg path {
-    fill: white;
+  fill: white;
 }
 
-/* text */
 .text {
-    position: absolute;
-    right: 0%;
-    width: 0%;
-    opacity: 0;
-    color: white;
-    font-size: 1.0em;
-    font-weight: 600;
-    transition-duration: .3s;
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.0em;
+  font-weight: 600;
+  transition-duration: 0.3s;
 }
 
-/* hover effect on button width */
-.Btn:hover {
-    width: 125px;
-    border-radius: 40px;
-    transition-duration: .3s;
+.login-btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: 0.3s;
 }
 
-.Btn:hover .sign {
-    width: 30%;
-    transition-duration: .3s;
-    padding-left: 20px;
+.login-btn:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 20px;
 }
 
-/* hover effect button's text */
-.Btn:hover .text {
-    opacity: 1;
-    width: 70%;
-    transition-duration: .3s;
-    padding-right: 10px;
+.login-btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 10px;
 }
 
-/* button click effect*/
-.Btn:active {
-    transform: translate(2px, 2px);
+.login-btn:active {
+  transform: translate(2px, 2px);
 }
 
-
-.card img {
-    max-width: 100%; /* ปรับให้ภาพที่แสดงมีขนาดไม่เกินขนาดของ div */
-    max-height: 100%;
+/* Main Container */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 120px 20px 40px;
+  box-sizing: border-box;
 }
 
+/* Card Styles */
+.signup-card {
+  background: rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+/* Form Styles */
+.signup-form {
+  padding: 40px 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-title {
+  text-align: center;
+  font-weight: bolder;
+  margin: 0 0 30px 0;
+  font-size: 28px;
+  color: #333;
+}
+
+/* Avatar Styles */
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatar-image {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 3px solid rgba(71, 65, 255, 0.3);
+}
+
+.avatar-label {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.file-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px dashed rgba(71, 65, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-input:hover {
+  border-color: rgb(71, 65, 255);
+  background: rgba(71, 65, 255, 0.05);
+}
+
+/* Form Fields */
+.form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Submit Button */
+.submit-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.submit-btn {
+  width: 200px;
+  height: 45px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(71, 65, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* Toolbar adjustments */
+  mat-toolbar {
+    padding: 0 15px;
+    height: 60px;
+  }
   
+  .brand-text {
+    font-size: 24px;
+  }
+  
+  .login-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .login-btn:hover {
+    width: 110px;
+  }
+  
+  /* Main container adjustments */
+  .signup-container {
+    padding: 80px 15px 30px;
+  }
+  
+  .signup-card {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+  
+  .signup-form {
+    padding: 30px 25px;
+  }
+  
+  .form-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .avatar-image {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
 
+@media (max-width: 480px) {
+  /* Mobile specific adjustments */
+  mat-toolbar {
+    padding: 0 10px;
+    height: 55px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .toolbar-brand {
+    flex-grow: 0;
+  }
+  
+  .brand-text {
+    font-size: 20px;
+  }
+  
+  .toolbar-actions {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+  }
+  
+  .signup-container {
+    padding: 70px 10px 20px;
+  }
+  
+  .signup-card {
+    margin: 0 5px;
+    border-radius: 12px;
+  }
+  
+  .signup-form {
+    padding: 25px 20px;
+  }
+  
+  .form-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .avatar-image {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .avatar-label {
+    font-size: 14px;
+  }
+  
+  .file-input {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    height: 40px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  .signup-form {
+    padding: 20px 15px;
+  }
+  
+  .brand-text {
+    font-size: 18px;
+  }
+  
+  .form-title {
+    font-size: 20px;
+  }
+  
+  .avatar-image {
+    width: 70px;
+    height: 70px;
+  }
+}

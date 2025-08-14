@@ -1,18 +1,20 @@
 <mat-toolbar>
-  <div style="text-align: center;">
-    <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">Edit profile</span></a>
+  <div class="toolbar-content">
+    <a routerLink="/"><span class="toolbar-title">Edit profile</span></a>
   </div>
 </mat-toolbar>
 
-<div class="container" style="display: flex; justify-content: center; margin-top: 100px;">
-  <div class="card" style="background: #ffffff5b; width: 35%; height: 400px;">
-    <form [formGroup]="nameForm" (ngSubmit)="changeName()" style="width: 100%; padding: 50px;" novalidate>
-      <h2 style="text-align: center; font-weight: bolder;">Change Name</h2>
-      <div>
-        <label for="newName">New Name:</label>
-        <input type="text" formControlName="newName" />
+<div class="container">
+  <div class="card">
+    <form [formGroup]="nameForm" (ngSubmit)="changeName()" class="form" novalidate>
+      <h2 class="form-title">Change Name</h2>
+      
+      <div class="form-group">
+        <label for="newName" class="form-label">New Name:</label>
+        <input type="text" formControlName="newName" class="form-input" />
       </div>
-      <div style="display: flex; justify-content: center;">
+      
+      <div class="form-actions">
         <button mat-raised-button type="submit">Change Name</button>
       </div>
     </form>

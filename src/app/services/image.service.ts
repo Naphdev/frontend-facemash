@@ -53,7 +53,8 @@ export class ImageService {
   updateImg(image_url: string, image_id: string): Observable<any> {
     const body = {
       image_url: image_url,
-      image_id: image_id
+      image_id: image_id,
+       points: 0  // เพิ่มบรรทัดนี้เพื่อกำหนดคะแนนเริ่มต้นเป็น 0
     };
     return this.http.put<any>(`${this.apiUrl}/changeImg`, body);
   }
