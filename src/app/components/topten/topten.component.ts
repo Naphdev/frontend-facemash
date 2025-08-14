@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ImageService } from '../../services/image.service';
 import { NgFor } from '@angular/common';
@@ -10,7 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-topten',
   standalone: true,
-  imports: [RouterLink, NgFor, MatToolbarModule, NavigationComponent, PreviousRankPipe ,HttpClientModule
+  imports: [
+    RouterLink, 
+    NgFor, 
+    MatToolbarModule, 
+    NavigationComponent, 
+    PreviousRankPipe,
+    HttpClientModule
   ],
   templateUrl: './topten.component.html',
   styleUrl: './topten.component.scss'
@@ -18,21 +25,23 @@ import { HttpClientModule } from '@angular/common/http';
 export class ToptenComponent implements OnInit {
   images: any[] = [];
   topTenImages: any[] = [];
-  previousTopTenImages: any[] = []; // เพิ่มตัวแปรเก็บข้อมูล Top 10 ของวันก่อนหน้า
+  previousTopTenImages: any[] = [];
   avatar_img: any;
   name: any;
   email: any;
   aid: any;
 
-  constructor(private imageService: ImageService) { }
+  constructor(
+    private imageService: ImageService,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    if (typeof localStorage !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       try {
         this.topTenImages = await this.getTopTenImages();
       } catch (error) {
         console.error('Error loading top ten images:', error);
-        // ถ้าไม่มีข้อมูล ให้สร้างข้อมูลตัวอย่าง
         this.topTenImages = [
           {
             _id: '1',
@@ -50,32 +59,29 @@ export class ToptenComponent implements OnInit {
           }
         ];
       }
-  
-      //getlocalStorage
-      this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
+
+      // ดึงข้อมูลจาก localStorage
+      this.aid = localStorage.getItem('_id');
       this.avatar_img = localStorage.getItem('avatar_img');
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
     } else {
-      console.warn('localStorage is not available. Skipping initialization.');
+      console.warn('Running on server — localStorage not available.');
     }
-  
   }
 
   async getTopTenImages(): Promise<any[]> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       console.log('Fetching top ten images...');
       this.imageService.getTopTenImages().subscribe(
         (data: any[]) => {
           console.log('Top ten API response:', data);
-          this.previousTopTenImages = this.topTenImages; // บันทึกข้อมูล Top 10 ของวันก่อนหน้า
+          this.previousTopTenImages = this.topTenImages;
           this.topTenImages = data;
-          console.log('Top ten images set:', this.topTenImages);
           resolve(this.topTenImages);
         },
         error => {
           console.error('Error fetching top ten images:', error);
-          // ถ้าไม่มีข้อมูล ให้สร้างข้อมูลตัวอย่าง
           this.topTenImages = [
             {
               _id: '1',
@@ -99,9 +105,6 @@ export class ToptenComponent implements OnInit {
   }
 
   formatPoints(points: number): string {
-    // Format points to show only 1 decimal place
     return points.toFixed(1);
   }
-  
 }
-

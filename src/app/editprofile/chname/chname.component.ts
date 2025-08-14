@@ -9,6 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarService } from '../../services/snackbar.service';
 
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
+
 @Component({
   selector: 'app-chname',
   standalone: true,
@@ -28,16 +31,22 @@ export class ChnameComponent implements OnInit {
   aid: any;
   name: any;
 
-  constructor(private http: HttpClient,
-    private snackbarService: SnackbarService) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) { }
 
   ngOnInit(): void {
     this.nameForm = this.createFormGroup();
 
-    this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
-    this.name = localStorage.getItem('name');
-    console.log('User ID from localStorage:', this.aid);
-    console.log('User name from localStorage:', this.name);
+    // ตรวจสอบว่าเป็น browser ก่อนเข้าถึง localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
+      this.name = localStorage.getItem('name');
+      console.log('User ID from localStorage:', this.aid);
+      console.log('User name from localStorage:', this.name);
+    }
 
     if (this.aid !== null) {
       this.nameForm.patchValue({
@@ -77,9 +86,30 @@ export class ChnameComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Name changed successfully:', response);
+          
+          // อัปเดต localStorage เมื่อเปลี่ยนชื่อสำเร็จ
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('name', this.nameForm.value.newName);
+          }
+          
           this.snackbarService.openSnackBar('Name changed successfully.', 'success');
           this.nameForm.reset();
           this.errorMessage = '';
+          
+          // Reset ค่า userId และ newName หลังจาก reset form
+          if (this.aid !== null) {
+            this.nameForm.patchValue({
+              userId: this.aid
+            });
+          }
+          
+          // อัปเดตชื่อใหม่ใน form และ property
+          if (isPlatformBrowser(this.platformId)) {
+            this.name = localStorage.getItem('name');
+            this.nameForm.patchValue({
+              newName: this.name
+            });
+          }
         },
         error: (error) => {
           console.error('Error occurred:', error);

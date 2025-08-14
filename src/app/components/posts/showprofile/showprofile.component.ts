@@ -48,16 +48,7 @@ export class ShowprofileComponent implements OnInit{
         this.name = response?.name;
         this.email = response?.email;
 
-        // Set values in localStorage
-        // localStorage.setItem('aid', this.aid);
-        // localStorage.setItem('avatar_img', this.avatar_img);
-        // localStorage.setItem('name', this.name);
-        // localStorage.setItem('email', this.email);
 
-        // console.log(response?._id);
-        // console.log(response?.avatar_img);
-        // console.log(response?.name);
-        // console.log(response?.email);
 
       }, (error) => {
         console.error("Error occurred while fetching user details:", error);

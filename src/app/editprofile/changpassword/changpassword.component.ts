@@ -9,6 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarService } from '../../services/snackbar.service';
 
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
+
 @Component({
   selector: 'app-changpassword',
   standalone: true,
@@ -28,14 +31,20 @@ export class ChangpasswordComponent implements OnInit {
   passwordForm: FormGroup;
   aid: any;
 
-  constructor(private http: HttpClient,
-              private snackbarService: SnackbarService) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) {
     this.passwordForm = this.createFormGroup();
   }
 
   ngOnInit(): void {
-    this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
-    console.log('User ID from localStorage:', this.aid);
+    // ตรวจสอบว่าเป็น browser ก่อนเข้าถึง localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
+      console.log('User ID from localStorage:', this.aid);
+    }
     
     if (this.aid !== null) {
       this.passwordForm.patchValue({
@@ -73,6 +82,13 @@ export class ChangpasswordComponent implements OnInit {
           this.snackbarService.openSnackBar('Password changed successfully.', 'success');
           this.passwordForm.reset();
           this.errorMessage = '';
+          
+          // Reset userId หลังจาก reset form
+          if (this.aid !== null) {
+            this.passwordForm.patchValue({
+              userId: this.aid
+            });
+          }
         },
         error: (error) => {
           console.error('Error occurred:', error);

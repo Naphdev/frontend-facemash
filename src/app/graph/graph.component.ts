@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ImageService } from '../services/image.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -27,21 +28,24 @@ export class GraphComponent implements OnInit {
   name: any;
   email: any;
   aid: any;
-  displayedColumns: string[] = ['rank', 'image', 'name', 'points']; // ลบ 'change' ออก
+  displayedColumns: string[] = ['rank', 'image', 'name', 'points'];
 
-  constructor(private imageService: ImageService) { }
+  constructor(
+    private imageService: ImageService,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       this.getWeeklyRankings();
 
-      //getlocalStorage
-      this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
+      // get localStorage
+      this.aid = localStorage.getItem('_id');
       this.avatar_img = localStorage.getItem('avatar_img');
       this.name = localStorage.getItem('name');
       this.email = localStorage.getItem('email');
     } else {
-      console.warn('localStorage is not available. Skipping initialization.');
+      console.warn('localStorage is not available on the server. Skipping initialization.');
     }
   }
 
@@ -53,14 +57,12 @@ export class GraphComponent implements OnInit {
           rank: index + 1,
           image: image.image_url,
           name: image.name || 'Unknown',
-          points: this.formatPoints(image.points || 0), // Format points to 1 decimal place
+          points: this.formatPoints(image.points || 0),
           _id: image._id
         }));
-        console.log('Processed rankings:', this.weeklyRankings);
       },
       error => {
         console.error('Error fetching weekly rankings:', error);
-        // Fallback data for testing
         this.weeklyRankings = [
           { rank: 1, image: 'https://via.placeholder.com/100', name: 'Sample User 1', points: '95.0', _id: '1' },
           { rank: 2, image: 'https://via.placeholder.com/100', name: 'Sample User 2', points: '87.5', _id: '2' },
@@ -73,9 +75,6 @@ export class GraphComponent implements OnInit {
   }
 
   formatPoints(points: number): string {
-    // Format points to show only 1 decimal place
     return points.toFixed(1);
   }
-
-  // ลบฟังก์ชัน getRankChange และ getChangeColor ออก
 }

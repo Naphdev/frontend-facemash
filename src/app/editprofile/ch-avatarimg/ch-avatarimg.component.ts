@@ -10,6 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ImageUploadService } from '../../services/upload-service.service';
 
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
+
 @Component({
   selector: 'app-ch-avatarimg',
   standalone: true,
@@ -30,17 +33,23 @@ export class ChAvatarimgComponent implements OnInit {
   selectedImage: any;
   newAvatarImg: any;
 
-  constructor(private http: HttpClient,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient,
     private snackbarService: SnackbarService,
-    private uploadService: ImageUploadService) { }
+    private uploadService: ImageUploadService
+  ) { }
 
   ngOnInit(): void {
     this.AvatarForm = this.createFormGroup();
 
-    this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
-    this.avatar_img = localStorage.getItem('avatar_img');
-    console.log('User ID from localStorage:', this.aid);
-    console.log('Avatar from localStorage:', this.avatar_img);
+    // ตรวจสอบว่าเป็น browser ก่อนเข้าถึง localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
+      this.avatar_img = localStorage.getItem('avatar_img');
+      console.log('User ID from localStorage:', this.aid);
+      console.log('Avatar from localStorage:', this.avatar_img);
+    }
 
     if (this.aid !== null) {
       this.AvatarForm.patchValue({
@@ -58,10 +67,10 @@ export class ChAvatarimgComponent implements OnInit {
     });
   }
 
-  changeAvatarImg() { 
+  changeAvatarImg() {
     console.log('Form values:', this.AvatarForm.value);
     console.log('Form valid:', this.AvatarForm.valid);
-    
+        
     if (this.AvatarForm.invalid) {
       console.log('Form is invalid');
       return;
@@ -75,7 +84,13 @@ export class ChAvatarimgComponent implements OnInit {
     this.http.put<any>('https://backend-facemash-app-1.onrender.com/auth/changeAvatar', body, { headers })
       .subscribe({
         next: (response) => {
-          console.log('Avatar changed successfully:', response); 
+          console.log('Avatar changed successfully:', response);
+          
+          // อัปเดต localStorage เมื่อเปลี่ยน avatar สำเร็จ
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('avatar_img', this.newAvatarImg);
+          }
+          
           this.snackbarService.openSnackBar('Avatar changed successfully.', 'success');
           this.AvatarForm.reset();
           this.errorMessage = '';
@@ -94,7 +109,7 @@ export class ChAvatarimgComponent implements OnInit {
       this.uploadFile(file);
     }
   }
-  
+    
   uploadFile(file: File): void {
     this.uploadService.uploadFile(file)
       .then(downloadURL => {
@@ -107,7 +122,7 @@ export class ChAvatarimgComponent implements OnInit {
       .catch(error => {
         console.error('Error uploading file:', error);
       });
-  
+      
     // Set selected image URL for preview
     const reader = new FileReader();
     reader.onload = (e) => {

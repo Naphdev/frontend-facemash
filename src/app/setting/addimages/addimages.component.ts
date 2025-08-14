@@ -46,11 +46,12 @@ export class AddimagesComponent {
     private route: ActivatedRoute,
     private uploadService: ImageUploadService,
     private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
   ) { }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       this.getUsedetail();
       this.aid = localStorage.getItem('aid');
       this.avatar_img = localStorage.getItem('avatar_img');
@@ -59,7 +60,6 @@ export class AddimagesComponent {
     } else {
       console.warn('localStorage is not available. Skipping initialization.');
     }
-
   }
 
   getUsedetail() {
@@ -73,10 +73,12 @@ export class AddimagesComponent {
         this.name = response?.name;
         this.email = response?.email;
 
-        localStorage.setItem('aid', this.aid);
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('aid', this.aid);
+          localStorage.setItem('avatar_img', this.avatar_img);
+          localStorage.setItem('name', this.name);
+          localStorage.setItem('email', this.email);
+        }
       }, (error) => {
         console.error("Error occurred while fetching user details:", error);
       });
@@ -98,24 +100,26 @@ export class AddimagesComponent {
       .catch(error => {
         console.error('Error uploading file:', error);
       });
-    if (file) {
-      // Set selected image URL for preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result) {
-          this.selectedImage = e.target.result;
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        this.selectedImage = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
   getAdd(): void {
     if (this.downloadURL) {
-      const image_url = this.downloadURL;
-      const facemash_id = localStorage.getItem('aid');
+      let facemash_id: string | null = null;
+
+      if (isPlatformBrowser(this.platformId)) {
+        facemash_id = localStorage.getItem('aid');
+      }
+
       if (facemash_id) {
-        this.imageService.getAdd(image_url, facemash_id).subscribe(
+        this.imageService.getAdd(this.downloadURL, facemash_id).subscribe(
           () => {
             console.log('Image added successfully');
             this.router.navigate(['/main']);

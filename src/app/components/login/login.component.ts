@@ -15,8 +15,8 @@ import { GlobalConstants } from '../../global/global-constants';
 import { Router } from '@angular/router';
 import jwt_decode, { jwtDecode } from 'jwt-decode';
 
-
-
+import { isPlatformBrowser } from '@angular/common';  
+import { PLATFORM_ID, Inject } from '@angular/core';  
 
 @Component({
   selector: 'app-login',
@@ -41,14 +41,21 @@ export class LoginComponent implements OnInit {
   actype: any;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private authService: AuthService,
     private router: Router,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService
+  ) {
     this.loginForm = this.createFormGroup();
   }
 
   ngOnInit(): void {
-    this.loginForm = this.createFormGroup();
+    // เพิ่มการตรวจสอบนี้ก่อนใช้ localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      // ย้ายโค้ด localStorage ทั้งหมดมาใส่ในนี้
+      this.loginForm = this.createFormGroup();
+    }
   }
 
   createFormGroup(): FormGroup {
@@ -63,48 +70,55 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe((response: any) => {
-        const token: any = localStorage.getItem("token");
-        let decodedToken: any;
-        try {
-          decodedToken = jwtDecode(token);
-          // ใช้ decodedToken.userId (string) จาก JWT
-          console.log(decodedToken.userId);
-        } catch (err) {
-          localStorage.clear();
-          this.router.navigate(["login"]);
-        }
-
-        this.responseMessage = response?.message;
-        this.actype = response?.actype;
-        this.snackbarService.openSnackBar(this.responseMessage, "");
         
-        if (this.responseMessage === "login successfully") {
-          // Store user details in localStorage
-          localStorage.setItem('_id', decodedToken.userId);
-          localStorage.setItem('email', this.loginForm.value.email);
-          localStorage.setItem('actype', this.actype);
+        // ตรวจสอบ platform ก่อนใช้ localStorage
+        if (isPlatformBrowser(this.platformId)) {
+          const token: any = localStorage.getItem("token");
+          let decodedToken: any;
+          try {
+            decodedToken = jwtDecode(token);
+            // ใช้ decodedToken.userId (string) จาก JWT
+            console.log(decodedToken.userId);
+          } catch (err) {
+            localStorage.clear();
+            this.router.navigate(["login"]);
+            return;
+          }
+
+          this.responseMessage = response?.message;
+          this.actype = response?.actype;
+          this.snackbarService.openSnackBar(this.responseMessage, "");
           
-          // Get user details from backend and store them
-          this.authService.getUsedetail(decodedToken.userId).subscribe((userDetails: any) => {
-            localStorage.setItem('name', userDetails.name);
-            localStorage.setItem('avatar_img', userDetails.avatar_img);
+          if (this.responseMessage === "login successfully") {
+            // Store user details in localStorage
+            localStorage.setItem('_id', decodedToken.userId);
+            localStorage.setItem('email', this.loginForm.value.email);
+            localStorage.setItem('actype', this.actype);
             
-            if (this.actype == "user") {
-              this.router.navigate(["posts"], { queryParams: { userId: decodedToken.userId } });
-            } else if (this.actype == "admin") {
-              this.router.navigate(["dashboard"], { queryParams: { userId: decodedToken.userId } });
-            }
-          }, (error) => {
-            console.error('Error fetching user details:', error);
-            // Still navigate even if user details fetch fails
-            if (this.actype == "user") {
-              this.router.navigate(["posts"], { queryParams: { userId: decodedToken.userId } });
-            } else if (this.actype == "admin") {
-              this.router.navigate(["dashboard"], { queryParams: { userId: decodedToken.userId } });
-            }
-          });
-        } else {
-          this.router.navigate(["login"]);
+            // Get user details from backend and store them
+            this.authService.getUsedetail(decodedToken.userId).subscribe((userDetails: any) => {
+              if (isPlatformBrowser(this.platformId)) {
+                localStorage.setItem('name', userDetails.name);
+                localStorage.setItem('avatar_img', userDetails.avatar_img);
+              }
+              
+              if (this.actype == "user") {
+                this.router.navigate(["posts"], { queryParams: { userId: decodedToken.userId } });
+              } else if (this.actype == "admin") {
+                this.router.navigate(["dashboard"], { queryParams: { userId: decodedToken.userId } });
+              }
+            }, (error) => {
+              console.error('Error fetching user details:', error);
+              // Still navigate even if user details fetch fails
+              if (this.actype == "user") {
+                this.router.navigate(["posts"], { queryParams: { userId: decodedToken.userId } });
+              } else if (this.actype == "admin") {
+                this.router.navigate(["dashboard"], { queryParams: { userId: decodedToken.userId } });
+              }
+            });
+          } else {
+            this.router.navigate(["login"]);
+          }
         }
       }, (error) => {
         console.error('Error occurred:', error);
@@ -119,5 +133,3 @@ export class LoginComponent implements OnInit {
   }
 
 }
-
-

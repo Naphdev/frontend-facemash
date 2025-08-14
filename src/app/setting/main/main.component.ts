@@ -1,4 +1,5 @@
 import { Component, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser, NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -6,13 +7,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ImageService } from '../../services/image.service';
-import { NgFor, NgIf } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangpasswordComponent } from '../../editprofile/changpassword/changpassword.component';
 import { ChnameComponent } from '../../editprofile/chname/chname.component';
 import { ChAvatarimgComponent } from '../../editprofile/ch-avatarimg/ch-avatarimg.component';
-import { AddimagesComponent } from '../addimages/addimages.component';
-
 
 @Component({
   selector: 'app-main',
@@ -42,11 +40,12 @@ export class MainComponent {
     private authService: AuthService,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       this.getUsedetail();
       this.getOnlyone();
       this.aid = localStorage.getItem('aid');
@@ -56,7 +55,6 @@ export class MainComponent {
     } else {
       console.warn('localStorage is not available. Skipping initialization.');
     }
-
   }
 
   getUsedetail() {
@@ -70,32 +68,35 @@ export class MainComponent {
         this.name = response?.name;
         this.email = response?.email;
 
-        localStorage.setItem('aid', this.aid);
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('aid', this.aid);
+          localStorage.setItem('avatar_img', this.avatar_img);
+          localStorage.setItem('name', this.name);
+          localStorage.setItem('email', this.email);
+        }
       }, (error) => {
         console.error("Error occurred while fetching user details:", error);
       });
   }
 
   getOnlyone() {
-    this.aid = localStorage.getItem('aid');
-    this.imageService.getOnly(this.aid).subscribe(
-      data => {
-        this.images = data;
-        this.id = data?._id;
-        localStorage.setItem('image_id', this.id);
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    if (isPlatformBrowser(this.platformId)) {
+      this.aid = localStorage.getItem('aid');
+      this.imageService.getOnly(this.aid).subscribe(
+        data => {
+          this.images = data;
+          this.id = data?._id;
+          localStorage.setItem('image_id', this.id);
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   changepw() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "1000px";
     dialogConfig.width = "1000px";
     this.dialog.open(ChangpasswordComponent, dialogConfig);
   }
@@ -103,13 +104,11 @@ export class MainComponent {
   changename() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "1000px";
-    dialogConfig.width = "1000px";
     this.dialog.open(ChnameComponent, dialogConfig);
   }
 
   changeAvatar() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "1000px";
     dialogConfig.width = "1000px";
     this.dialog.open(ChAvatarimgComponent, dialogConfig);
   }

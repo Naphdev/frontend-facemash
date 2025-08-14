@@ -9,7 +9,8 @@ import { NgFor } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ShowimgComponent } from './showimg/showimg.component'; 
 
-
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,7 +27,6 @@ import { ShowimgComponent } from './showimg/showimg.component';
 })
 export class DashboardComponent implements OnInit {
 
-
   userId: any;
   avatar_img: any;
   name: any;
@@ -34,20 +34,24 @@ export class DashboardComponent implements OnInit {
   aid: any;
   acall: any[] = [];
 
-  constructor(private authService: AuthService,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private authService: AuthService,
     private route: ActivatedRoute,
-    private dialog: MatDialog, ){ }
-
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getUsedetail();
     this.fetchAccounts();
 
-    //getlocalStorage
-    this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
-    this.avatar_img = localStorage.getItem('avatar_img');
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
+    // ตรวจสอบว่าเป็น browser ก่อนเข้าถึง localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      this.aid = localStorage.getItem('_id'); // Changed from 'aid' to '_id'
+      this.avatar_img = localStorage.getItem('avatar_img');
+      this.name = localStorage.getItem('name');
+      this.email = localStorage.getItem('email');
+    }
   }
 
   getUsedetail() {
@@ -63,11 +67,13 @@ export class DashboardComponent implements OnInit {
         this.name = response?.name;
         this.email = response?.email;
 
-        // Set values in localStorage
-        localStorage.setItem('_id', this.aid); // Changed from 'aid' to '_id'
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
+        // Set values in localStorage - ครอบด้วย isPlatformBrowser
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('_id', this.aid); // Changed from 'aid' to '_id'
+          localStorage.setItem('avatar_img', this.avatar_img);
+          localStorage.setItem('name', this.name);
+          localStorage.setItem('email', this.email);
+        }
 
         // console.log(response?._id);
         // console.log(response?.avatar_img);
@@ -86,38 +92,33 @@ export class DashboardComponent implements OnInit {
     } catch (error) {
         console.error(error);
     }
-}
-
-async getaccount(): Promise<any[]> {
-  try {
-    const data: any | undefined = await this.authService.getaccount().toPromise();
-    if (data !== undefined) {
-      this.acall = data; // Changed from data[0] to data
-      console.log(this.acall);
-      return data;
-    } else {
-      throw new Error("Data is undefined"); // โยน error ถ้า data เป็น undefined
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
   }
-}
 
+  async getaccount(): Promise<any[]> {
+    try {
+      const data: any | undefined = await this.authService.getaccount().toPromise();
+      if (data !== undefined) {
+        this.acall = data; // Changed from data[0] to data
+        console.log(this.acall);
+        return data;
+      } else {
+        throw new Error("Data is undefined"); // โยน error ถ้า data เป็น undefined
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 
-showimg(aid: any, name: any) {
-  const dialogConfig = new MatDialogConfig();
-  dialogConfig.width = "80%"; // กำหนดความกว้างของ dialog เป็น 80% ของหน้าจอ
-  dialogConfig.height = "80%"; // กำหนดความสูงของ dialog เป็น 80% ของหน้าจอ
-  dialogConfig.panelClass = 'custom-dialog-container'; // เพิ่มคลาสเพื่อกำหนด CSS สำหรับ dialog container
-  dialogConfig.data = { aid: aid,
-                        name: name };
+  showimg(aid: any, name: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "80%"; // กำหนดความกว้างของ dialog เป็น 80% ของหน้าจอ
+    dialogConfig.height = "80%"; // กำหนดความสูงของ dialog เป็น 80% ของหน้าจอ
+    dialogConfig.panelClass = 'custom-dialog-container'; // เพิ่มคลาสเพื่อกำหนด CSS สำหรับ dialog container
+    dialogConfig.data = { aid: aid,
+                          name: name };
 
-  this.dialog.open(ShowimgComponent,dialogConfig);
-}
-
-
-  
-
+    this.dialog.open(ShowimgComponent,dialogConfig);
+  }
 
 }

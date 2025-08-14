@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ImageService } from '../../services/image.service';
-import { Router } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-editimages',
@@ -37,17 +37,18 @@ export class EditimagesComponent {
   email: any;
   images: any[] = [];
   aid: any;
-  id : any;
+  id: any;
 
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
   ) { }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
       this.getUsedetail();
       this.getOnlyoneimage();
       this.id = localStorage.getItem('image_id');
@@ -58,7 +59,6 @@ export class EditimagesComponent {
     } else {
       console.warn('localStorage is not available. Skipping initialization.');
     }
-
   }
 
   getUsedetail() {
@@ -72,10 +72,12 @@ export class EditimagesComponent {
         this.name = response?.name;
         this.email = response?.email;
 
-        localStorage.setItem('_id', this.aid); // Changed from 'aid' to '_id'
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('_id', this.aid); // Changed from 'aid' to '_id'
+          localStorage.setItem('avatar_img', this.avatar_img);
+          localStorage.setItem('name', this.name);
+          localStorage.setItem('email', this.email);
+        }
       }, (error) => {
         console.error("Error occurred while fetching user details:", error);
       });
@@ -83,15 +85,16 @@ export class EditimagesComponent {
 
   getOnlyoneimage() {
     this.route.params.subscribe(params => {
-      const id = params['id']; 
+      const id = params['id'];
       console.log('Edit image ID:', id);
       this.imageService.getOnlyimage(id).subscribe(
         data => {
           console.log('Image data:', data);
-          // ถ้า data เป็น object ให้แปลงเป็น array
           this.images = Array.isArray(data) ? data : [data];
           this.id = data?._id;
-          localStorage.setItem('image_id', this.id);
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('image_id', this.id);
+          }
           console.log('Images array:', this.images);
         },
         error => {
@@ -100,36 +103,32 @@ export class EditimagesComponent {
       );
     });
   }
-  
-  
-deleteImage() {
-  // แสดง dialog ยืนยันการลบ
-  const confirmDelete = confirm('คุณแน่ใจหรือไม่ที่จะลบภาพนี้? การกระทำนี้ไม่สามารถยกเลิกได้');
-  
-  if (confirmDelete) {
-    this.route.params.subscribe(params => {
-      const id = params['id']; 
-      console.log('Deleting image with ID:', id); 
-      
-      this.imageService.delete(id).subscribe(
-        () => {
-          console.log('Image deleted successfully.');
-          // แสดงข้อความยืนยันการลบสำเร็จ (optional)
-          alert('ลบภาพเรียบร้อยแล้ว');
-          this.router.navigate(['/main']);
-        },
-        error => {
-          console.error('Error deleting image:', error);
-          // แสดงข้อความ error
-          alert('เกิดข้อผิดพลาดในการลบภาพ กรุณาลองใหม่อีกครั้ง');
-        }
-      );
-    });
-  } else {
-    console.log('Delete cancelled by user');
+
+  deleteImage() {
+    const confirmDelete = confirm('คุณแน่ใจหรือไม่ที่จะลบภาพนี้? การกระทำนี้ไม่สามารถยกเลิกได้');
+
+    if (confirmDelete) {
+      this.route.params.subscribe(params => {
+        const id = params['id'];
+        console.log('Deleting image with ID:', id);
+
+        this.imageService.delete(id).subscribe(
+          () => {
+            console.log('Image deleted successfully.');
+            alert('ลบภาพเรียบร้อยแล้ว');
+            this.router.navigate(['/main']);
+          },
+          error => {
+            console.error('Error deleting image:', error);
+            alert('เกิดข้อผิดพลาดในการลบภาพ กรุณาลองใหม่อีกครั้ง');
+          }
+        );
+      });
+    } else {
+      console.log('Delete cancelled by user');
+    }
   }
-}
-  
+
   changeImage(imageId: string) {
     console.log('Changing image with ID:', imageId);
     this.router.navigate(['/chImage', imageId]);
